@@ -14,16 +14,26 @@ import com.barcode.app.services.BarCodeService;
 import com.barcode.app.services.ProductService;
 import com.barcode.app.services.ProviderService;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 @Component
-public class FxController implements Initializable {
+public class ControllerHome implements Initializable {
+
+	@Autowired
+	private ProviderService serviceProvider;
+
+	@Autowired
+	private ProductService serviceProduct;
+
+	@Autowired
+	private BarCodeService serviceBarcode;
 
 	@FXML
 	private Label lblTitle;
@@ -37,25 +47,13 @@ public class FxController implements Initializable {
 	@FXML
 	private TextField txtFieldSearch;
 
-	@Autowired
-	private ProviderService serviceProvider;
-	
-	@Autowired
-	private ProductService serviceProduct;
-	
-	@Autowired
-	private BarCodeService serviceBarcode;
-
-	@FXML
-	private ComboBox<Provider> combobox;
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		combobox.setItems(FXCollections.observableArrayList(serviceProvider.getAll()));
+
 	}
 
 	@FXML
-	public void onShow() {
+	public void onSearch() {
 		List<Provider> providers = serviceProvider.getAll();
 		for (int i = 0; i < providers.size(); i++) {
 			List<Product> products = serviceProduct.getAll();
@@ -65,12 +63,40 @@ public class FxController implements Initializable {
 					if (txtFieldSearch.getText().equals(barcodes.get(k).getBarcode())) {
 						textProduct.setText("Producto : " + products.get(j).getName());
 						textProvider.setText("Proveedor: " + providers.get(i).getName());
-					}else {
-						textProduct.setText("Product: ");
+					} else {
+						textProduct.setText("Producto: ");
 						textProvider.setText("Proveedor: ");
 					}
 				}
 			}
+		}
+	}
+
+	@FXML
+	public void btnProvider() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Provider.fxml"));
+			loader.setControllerFactory(BarCodeApplication.appContext::getBean);
+			Scene scene = new Scene(loader.load(), 400, 400);
+			Stage newWindow = new Stage();
+			newWindow.setScene(scene);
+			newWindow.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void btnProduct() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Product.fxml"));
+			loader.setControllerFactory(BarCodeApplication.appContext::getBean);
+			Scene scene = new Scene(loader.load(), 400, 400);
+			Stage newWindow = new Stage();
+			newWindow.setScene(scene);
+			newWindow.show();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.barcode.app.ControllerProduct">
+	<center>
+		<VBox alignment="CENTER" prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+			<children>
+				<Label alignment="CENTER" text="Producto">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
+            <Label text="Nombre" />
+            <TextField fx:id="txtFieldName" />
+            <Label text="Proveedor" />
+            <ComboBox fx:id="comboBoxProviders" prefWidth="150.0" />
+            <VBox alignment="CENTER" prefHeight="100.0">
+               <children>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#onSave" text="Crear" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <Text fx:id="txtMsm" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children>
+            </VBox>
+			</children>
+		</VBox>
+	</center>
+</BorderPane>
